@@ -1,0 +1,28 @@
+.add-wrapper {
+  margin: 50px;
+  padding: 50px;
+  border: 1px solid black;
+}
+
+.name-input,
+.date-input {
+  margin: 10px;
+}
+
+.add-btn {
+  width: 80px;
+  height: 30px;
+  border-radius: 10px;
+  background-color: black;
+  color: white;
+}
+
+.add-btn:hover {
+  background-color: white;
+  color: black;
+}
+
+.add-btn:disabled {
+  background-color: gray;
+  color: white;
+}
