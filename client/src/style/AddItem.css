@@ -1,7 +1,6 @@
 .add-wrapper {
   margin: 50px;
   padding: 50px;
-  /* border: 1px solid black; */
 }
 
 .name-input,
@@ -9,20 +8,25 @@
   margin: 10px;
 }
 
-.add-btn {
-  width: 80px;
-  height: 30px;
-  /* border-radius: 10px; */
+.add-btn:hover {
   background-color: black;
   color: white;
 }
 
-.add-btn:hover {
-  background-color: white;
-  color: black;
-}
-
 .add-btn:disabled {
   background-color: gray;
+  color: white;
+}
+
+.add-border {
+  border: 1px solid white;
+  padding: 40px;
+  border-radius: 50px;
+  box-shadow: 3px 6px 8px #888888;
+}
+
+.add-input {
+  text-align: center;
+  background-color: #383838;
   color: white;
 }

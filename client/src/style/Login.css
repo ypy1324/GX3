@@ -1,10 +1,25 @@
-.wrapper {
-  height: 100vh;
+.login-wrapper {
   display: flex;
   justify-content: center;
   align-items: center;
+  height: 100vh;
 }
 
-.btn {
-  align-content: center;
+.login-border {
+  border: 1px solid white;
+  padding: 40px;
+  border-radius: 50px;
+  box-shadow: 3px 6px 8px #888888;
+}
+
+.error-msg {
+  background-color: #f46d75;
+  border-radius: 100px;
+  margin-bottom: 10px;
+}
+
+.login-input {
+  background-color: #383838;
+  text-align: center;
+  color: white;
 }

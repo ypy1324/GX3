@@ -1,12 +1,14 @@
 import React, { useState } from "react";
 import axios from "axios";
 import "../style/AddItem.css";
+import Button from "react-bootstrap/Button";
+import Form from "react-bootstrap/Form";
 
 function AddItem() {
   const [formValue, setFormValue] = useState({ name: "", date: null });
   const [disable, setDisable] = useState({ name: true, date: true });
 
-  const onSubmit = (e) => {
+  const onAdd = () => {
     let body = {
       name: formValue.name,
       date: formValue.date,
@@ -53,27 +55,32 @@ function AddItem() {
 
   return (
     <div className="add-wrapper">
-      <form>
-        <input
-          className="name-input"
-          type="text"
-          onChange={(e) => handleName(e)}
-        />
-        <br />
-        <input
-          className="date-input"
-          type="date"
-          onChange={(e) => handleDate(e)}
-        />
-        <br />
-        <button
-          className="add-btn"
-          disabled={handleDisable()}
-          onClick={(e) => onSubmit()}
-        >
-          Add
-        </button>
-      </form>
+      <div className="add-border">
+        <form onSubmit={() => onAdd()}>
+          <Form.Label>Item Name</Form.Label>
+          <Form.Control
+            className="add-input"
+            type="text"
+            onChange={(e) => handleName(e)}
+          />
+          <br />
+          <Form.Label>Expiry Date</Form.Label>
+          <Form.Control
+            className="add-input"
+            type="date"
+            onChange={(e) => handleDate(e)}
+          />
+          <br />
+          <Button
+            variant="light"
+            type="submit"
+            className="add-btn"
+            disabled={handleDisable()}
+          >
+            Add
+          </Button>
+        </form>
+      </div>
     </div>
   );
 }

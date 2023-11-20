@@ -1,26 +1,34 @@
-import React, { useState } from "react";
+import React from "react";
 import "../style/Alert.css";
 import moment from "moment";
+import Table from "react-bootstrap/Table";
 
 function Alert(props) {
   const currentDate = new Date();
 
   return (
     <div className="alert-wrapper">
-      {props.itemsList.map((item, i) => {
-        {
-          const compareDates = Math.floor(
-            (new Date(item.expiryDate) - currentDate) / 86400000
-          );
-          return compareDates < 6 && compareDates > -5 ? (
-            <div key={i}>
-              <div>{item.name}</div>
-              <div>{moment(item.expiryDate).add(1, "days").format("ll")}</div>
-              <hr />
-            </div>
-          ) : null;
-        }
-      })}
+      <Table striped bordered hover variant="dark">
+        <thead>
+          <tr>
+            <th>Item Name</th>
+            <th>Expiry Date</th>
+          </tr>
+        </thead>
+        <tbody>
+          {props.itemsList.map((item, i) => {
+            const compareDates = Math.floor(
+              (new Date(item.expiryDate) - currentDate) / 86400000
+            );
+            return compareDates < 6 && compareDates > -5 ? (
+              <tr key={i}>
+                <td>{item.name}</td>
+                <td>{moment(item.expiryDate).add(1, "days").format("ll")}</td>
+              </tr>
+            ) : null;
+          })}
+        </tbody>
+      </Table>
     </div>
   );
 }

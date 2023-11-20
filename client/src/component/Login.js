@@ -1,8 +1,9 @@
-import React, { useState, useEffect } from "react";
-import axios from "axios";
+import React, { useState } from "react";
 import { useNavigate } from "react-router-dom";
 import "../style/Login.css";
 import firebase from "../firebase.js";
+import Form from "react-bootstrap/Form";
+import Button from "react-bootstrap/Button";
 
 function Login() {
   const [email, setEmail] = useState("");
@@ -12,9 +13,6 @@ function Login() {
 
   const onLogin = async (e) => {
     e.preventDefault();
-    if (!(email && password)) {
-      return alert("Fill in all blanks");
-    }
     try {
       await firebase.auth().signInWithEmailAndPassword(email, password);
       navigate("/");
@@ -23,20 +21,31 @@ function Login() {
     }
   };
 
-  useEffect(() => {}, []);
-
   return (
-    <div className="wrapper">
-      <div>
-        <input type="email" onChange={(e) => setEmail(e.currentTarget.value)} />
-        <input
-          type="password"
-          onChange={(e) => setPassword(e.currentTarget.value)}
-        />
-        {error}
-        <button className="btn" onClick={(e) => onLogin(e)}>
-          Login
-        </button>
+    <div className="login-wrapper">
+      <div className="login-border">
+        <form onSubmit={(e) => onLogin(e)}>
+          <Form.Label>Email</Form.Label>
+          <Form.Control
+            type="email"
+            className="login-input"
+            onChange={(e) => setEmail(e.currentTarget.value)}
+          />
+          <br />
+          <Form.Label>Password</Form.Label>
+          <Form.Control
+            type="password"
+            className="login-input"
+            onChange={(e) => setPassword(e.currentTarget.value)}
+          />
+          <br />
+          <div className="error-msg">
+            <Form.Text>{error}</Form.Text>
+          </div>
+          <Button type="submit" variant="outline-light">
+            Login
+          </Button>
+        </form>
       </div>
     </div>
   );

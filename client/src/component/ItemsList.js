@@ -3,6 +3,9 @@ import axios from "axios";
 import "../style/ItemsList.css";
 import moment from "moment";
 import Alert from "./Alert";
+import Form from "react-bootstrap/Form";
+import Table from "react-bootstrap/Table";
+import Button from "react-bootstrap/Button";
 
 function ItemsList() {
   const [itemsList, setItemsList] = useState([]);
@@ -47,28 +50,46 @@ function ItemsList() {
     }
   };
 
-  // const onEdit = () => {};
-
   return (
     <div>
-      <input
-        type="search"
-        value={search}
-        onChange={(e) => setSearch(e.currentTarget.value)}
-      />
       <Alert itemsList={itemsList} />
+      <div className="search">
+        <Form.Label>Search</Form.Label>
+        <Form.Control
+          type="text"
+          className="search-input"
+          onChange={(e) => setSearch(e.currentTarget.value)}
+        />
+      </div>
       <div className="itemslist-wrapper">
-        {filteredItems.map((item, i) => {
-          return (
-            <div key={i}>
-              <div>{item.name}</div>
-              <div>{moment(item.expiryDate).add(1, "days").format("ll")}</div>
-              <button onClick={(e) => onDelete(item._id)}>Delete</button>
-              {/* <button onClick={(e) => onEdit()}>Edit</button> */}
-              <hr />
-            </div>
-          );
-        })}
+        <Table striped bordered hover variant="dark">
+          <thead>
+            <tr>
+              <th>Item Name</th>
+              <th>Expiry Date</th>
+              <th></th>
+            </tr>
+          </thead>
+          <tbody>
+            {filteredItems.map((item, i) => {
+              return (
+                <tr key={i}>
+                  <td>{item.name}</td>
+                  <td>{moment(item.expiryDate).add(1, "days").format("ll")}</td>
+                  <td>
+                    <Button
+                      variant="outline-danger"
+                      size="sm"
+                      onClick={() => onDelete(item._id)}
+                    >
+                      Delete
+                    </Button>
+                  </td>
+                </tr>
+              );
+            })}
+          </tbody>
+        </Table>
       </div>
     </div>
   );

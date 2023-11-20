@@ -1,4 +1,14 @@
 .itemslist-wrapper {
   margin: 50px;
-  /* border: 1px solid black; */
+}
+
+.search {
+  width: 50vw;
+  display: inline-block;
+}
+
+.search-input {
+  text-align: center;
+  background-color: #383838;
+  color: white;
 }
