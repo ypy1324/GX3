@@ -1,32 +1,35 @@
 import React, { useState } from "react";
 import axios from "axios";
-import "../style/AddItem.css";
+import "../style/UpdateItem.css";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import moment from "moment";
 
-function AddItem() {
+function UpdateItem({ item }) {
   const [formValue, setFormValue] = useState({
-    barcode: 0,
-    name: "",
-    expiryDate: "",
+    barcode: item.barcode,
+    name: item.name,
+    expiryDate: moment(item.expiryDate).add(1, "days").format("YYYY-MM-DD"),
   });
 
-  const onAdd = () => {
+  const onUpdate = () => {
     let body = {
+      id: item._id,
       barcode: formValue.barcode,
       name: formValue.name,
       expiryDate: formValue.expiryDate,
     };
     axios
-      .post("/api/addItem", body)
+      .post("/api/updateItem", body)
       .then((res) => {
         if (res.data.exist) {
-          console.log("already exist");
-        }
-        if (res.data.success) {
+          alert("already exists");
+        } else if (res.data.success) {
           // success
+          alert("succes");
         } else {
           // fail
+          alert("fail");
         }
       })
       .catch((err) => {
@@ -47,12 +50,12 @@ function AddItem() {
   };
 
   return (
-    <div className="add-wrapper">
-      <div className="add-border">
-        <form onSubmit={() => onAdd()}>
+    <div className="update-wrapper">
+      <div className="update-border">
+        <form onSubmit={() => onUpdate()}>
           <Form.Label>Barcode</Form.Label>
           <Form.Control
-            className="add-input"
+            className="update-input"
             value={formValue.barcode}
             type="number"
             onChange={(e) =>
@@ -62,7 +65,7 @@ function AddItem() {
           <br />
           <Form.Label>Item Name</Form.Label>
           <Form.Control
-            className="add-input"
+            className="update-input"
             value={formValue.name}
             type="text"
             onChange={(e) =>
@@ -72,7 +75,7 @@ function AddItem() {
           <br />
           <Form.Label>Expiry Date</Form.Label>
           <Form.Control
-            className="add-input"
+            className="update-input"
             value={formValue.expiryDate}
             type="date"
             onChange={(e) =>
@@ -83,10 +86,10 @@ function AddItem() {
           <Button
             variant="light"
             type="submit"
-            className="add-btn"
+            className="update-btn"
             disabled={handleDisable()}
           >
-            Add
+            Update
           </Button>
         </form>
       </div>
@@ -94,4 +97,4 @@ function AddItem() {
   );
 }
 
-export default AddItem;
+export default UpdateItem;

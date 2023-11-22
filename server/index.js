@@ -32,10 +32,26 @@ app.get("*", (req, res) => {
 });
 
 app.post("/api/addItem", (req, res) => {
-  const newItem = new Item({ name: req.body.name, expiryDate: req.body.date });
-  newItem.save().then(() => {
-    res.status(200).json({ success: true });
+  const newItem = new Item({
+    barcode: req.body.barcode,
+    name: req.body.name,
+    expiryDate: req.body.expiryDate,
   });
+  Item.findOne({ barcode: newItem.barcode })
+    .exec()
+    .then((item) => {
+      console.log(item);
+      if (item) {
+        res.status(200).json({ exist: true });
+      } else {
+        newItem.save().then(() => {
+          res.status(200).json({ success: true });
+        });
+      }
+    })
+    .catch((err) => {
+      res.status(400).json({ success: false });
+    });
 });
 
 app.post("/api/itemslist", (req, res) => {
@@ -51,6 +67,22 @@ app.post("/api/itemslist", (req, res) => {
 
 app.post("/api/deleteItem", (req, res) => {
   Item.deleteOne({ _id: req.body.id })
+    .exec()
+    .then(() => {
+      res.status(200).json({ success: true });
+    })
+    .catch((err) => {
+      res.status(400).json({ success: false });
+    });
+});
+
+app.post("/api/updateItem", (req, res) => {
+  let item = {
+    barcode: req.body.barcode,
+    name: req.body.name,
+    expiryDate: req.body.expiryDate,
+  };
+  Item.updateOne({ _id: req.body.id }, { $set: item })
     .exec()
     .then(() => {
       res.status(200).json({ success: true });

@@ -11,6 +11,7 @@ function Alert(props) {
       <Table striped bordered hover variant="dark">
         <thead>
           <tr>
+            <th>Barcode</th>
             <th>Item Name</th>
             <th>Expiry Date</th>
           </tr>
@@ -22,6 +23,7 @@ function Alert(props) {
             );
             return compareDates < 6 && compareDates > -5 ? (
               <tr key={i}>
+                <td>{item.barcode}</td>
                 <td>{item.name}</td>
                 <td>{moment(item.expiryDate).add(1, "days").format("ll")}</td>
               </tr>

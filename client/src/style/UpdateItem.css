@@ -1,4 +1,4 @@
-.add-wrapper {
+.update-wrapper {
   margin: 50px;
   padding: 50px;
 }
@@ -8,24 +8,24 @@
   margin: 10px;
 }
 
-.add-btn:hover {
+.update-btn:hover {
   background-color: black;
   color: white;
 }
 
-.add-btn:disabled {
+.update-btn:disabled {
   background-color: gray;
   color: white;
 }
 
-.add-border {
+.update-border {
   border: 1px solid white;
   padding: 40px;
   border-radius: 50px;
   box-shadow: 3px 6px 8px #888888;
 }
 
-.add-input {
+.update-input {
   text-align: center;
   background-color: #232323;
   color: white;

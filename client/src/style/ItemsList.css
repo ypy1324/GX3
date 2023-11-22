@@ -9,6 +9,14 @@
 
 .search-input {
   text-align: center;
-  background-color: #383838;
+  background-color: #232323;
   color: white;
+}
+
+.delete-btn {
+  margin-right: 10px;
+}
+
+.update-btn {
+  margin-left: 10px;
 }

@@ -7,7 +7,7 @@ import Form from "react-bootstrap/Form";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 
-function ItemsList() {
+function ItemsList({ getItem }) {
   const [itemsList, setItemsList] = useState([]);
   const [search, setSearch] = useState("");
   const filteredItems = itemsList.filter((item) => {
@@ -65,6 +65,7 @@ function ItemsList() {
         <Table striped bordered hover variant="dark">
           <thead>
             <tr>
+              <th>Barcode</th>
               <th>Item Name</th>
               <th>Expiry Date</th>
               <th></th>
@@ -74,15 +75,25 @@ function ItemsList() {
             {filteredItems.map((item, i) => {
               return (
                 <tr key={i}>
+                  <td>{item.barcode}</td>
                   <td>{item.name}</td>
                   <td>{moment(item.expiryDate).add(1, "days").format("ll")}</td>
                   <td>
                     <Button
+                      className="delete-btn"
                       variant="outline-danger"
                       size="sm"
                       onClick={() => onDelete(item._id)}
                     >
                       Delete
+                    </Button>
+                    <Button
+                      className="update-btn"
+                      variant="outline-success"
+                      size="sm"
+                      onClick={() => getItem(item)}
+                    >
+                      Update
                     </Button>
                   </td>
                 </tr>
