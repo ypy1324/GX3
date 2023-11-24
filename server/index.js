@@ -40,7 +40,6 @@ app.post("/api/addItem", (req, res) => {
   Item.findOne({ barcode: newItem.barcode })
     .exec()
     .then((item) => {
-      console.log(item);
       if (item) {
         res.status(200).json({ exist: true });
       } else {

@@ -22,14 +22,10 @@ function UpdateItem({ item }) {
     axios
       .post("/api/updateItem", body)
       .then((res) => {
-        if (res.data.exist) {
-          alert("already exists");
-        } else if (res.data.success) {
+        if (res.data.success) {
           // success
-          alert("succes");
         } else {
           // fail
-          alert("fail");
         }
       })
       .catch((err) => {
