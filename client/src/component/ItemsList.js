@@ -1,12 +1,10 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../style/ItemsList.css";
-import moment from "moment";
-import Alert from "./Alert";
+import Warning from "./Warning";
 import Form from "react-bootstrap/Form";
-import Table from "react-bootstrap/Table";
-import Button from "react-bootstrap/Button";
 import Pagination from "./Pagination";
+import Items from "./Items";
 
 function ItemsList({ getItem }) {
   const [itemsList, setItemsList] = useState([]);
@@ -31,34 +29,14 @@ function ItemsList({ getItem }) {
         if (res.data.success) {
           setItemsList([...res.data.itemsList]);
         } else {
-          // fail
+          alert("Failed to load items. Please try again");
         }
       })
       .catch((err) => {
         console.log(err);
+        alert("Failed to load items. Please try again");
       });
   }, []);
-
-  const onDelete = (id) => {
-    if (window.confirm("Delete item?")) {
-      let body = {
-        id: id,
-      };
-      axios
-        .post("/api/deleteItem", body)
-        .then((res) => {
-          if (res.data.success) {
-            // success
-            window.location.reload();
-          } else {
-            // fail
-          }
-        })
-        .catch((err) => {
-          // fail
-        });
-    }
-  };
 
   const paginate = (pageNumber) => {
     setCurrentPage(pageNumber);
@@ -66,7 +44,7 @@ function ItemsList({ getItem }) {
 
   return (
     <div>
-      <Alert itemsList={itemsList} />
+      <Warning itemsList={itemsList} />
       <div className="search">
         <Form.Label>Search</Form.Label>
         <Form.Control
@@ -75,47 +53,7 @@ function ItemsList({ getItem }) {
           onChange={(e) => setSearch(e.currentTarget.value)}
         />
       </div>
-      <div className="itemslist-wrapper">
-        <Table striped bordered hover variant="dark">
-          <thead>
-            <tr>
-              <th>Barcode</th>
-              <th>Item Name</th>
-              <th>Expiry Date</th>
-              <th></th>
-            </tr>
-          </thead>
-          <tbody>
-            {currentItems.map((item, i) => {
-              return (
-                <tr key={i}>
-                  <td>{item.barcode}</td>
-                  <td>{item.name}</td>
-                  <td>{moment(item.expiryDate).add(1, "days").format("ll")}</td>
-                  <td>
-                    <Button
-                      className="delete-btn"
-                      variant="outline-danger"
-                      size="sm"
-                      onClick={() => onDelete(item._id)}
-                    >
-                      Delete
-                    </Button>
-                    <Button
-                      className="update-btn"
-                      variant="outline-success"
-                      size="sm"
-                      onClick={() => getItem(item)}
-                    >
-                      Update
-                    </Button>
-                  </td>
-                </tr>
-              );
-            })}
-          </tbody>
-        </Table>
-      </div>
+      <Items getItem={getItem} currentItems={currentItems} />
       <div className="pagination">
         <Pagination
           itemsPerPage={itemsPerPage}

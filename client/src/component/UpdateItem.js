@@ -25,19 +25,20 @@ function UpdateItem({ item }) {
         if (res.data.success) {
           // success
         } else {
-          // fail
+          alert("Failed to update item. Please try again");
         }
       })
       .catch((err) => {
         console.log(err);
+        alert("Failed to update item. Please try again");
       });
   };
 
   const handleDisable = () => {
     if (
-      formValue.barcode != 0 &&
-      formValue.name != "" &&
-      formValue.expiryDate != ""
+      formValue.barcode !== 0 &&
+      formValue.name !== "" &&
+      formValue.expiryDate !== ""
     ) {
       return false;
     } else {

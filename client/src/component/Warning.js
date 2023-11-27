@@ -1,13 +1,13 @@
 import React from "react";
-import "../style/Alert.css";
+import "../style/Warning.css";
 import moment from "moment";
 import Table from "react-bootstrap/Table";
 
-function Alert(props) {
+function Warning(props) {
   const currentDate = new Date();
 
   return (
-    <div className="alert-wrapper">
+    <div className="warning-wrapper">
       <h1>!!!</h1>
       <Table striped bordered hover variant="dark">
         <thead>
@@ -36,4 +36,4 @@ function Alert(props) {
   );
 }
 
-export default Alert;
+export default Warning;

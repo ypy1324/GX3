@@ -3,7 +3,7 @@ import axios from "axios";
 import "../style/AddItem.css";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
-import Alert from "react-bootstrap/Alert";
+import CustomAlert from "./CustomAlert";
 
 function AddItem() {
   const [formValue, setFormValue] = useState({
@@ -25,14 +25,14 @@ function AddItem() {
         if (res.data.exist) {
           setShowAlert(true);
         } else if (res.data.success) {
-          // success
           window.location.reload();
         } else {
-          // fail
+          alert("Failed to add item. Please try again");
         }
       })
       .catch((err) => {
         console.log(err);
+        alert("Failed to add item. Please try again");
       });
   };
 
@@ -92,16 +92,7 @@ function AddItem() {
         >
           Add
         </Button>
-        {showAlert ? (
-          <Alert
-            className="alert"
-            variant="danger"
-            onClose={() => setShowAlert(false)}
-            dismissible
-          >
-            Item already exists
-          </Alert>
-        ) : null}
+        {showAlert ? <CustomAlert setShowAlert={setShowAlert} /> : null}
       </div>
     </div>
   );
