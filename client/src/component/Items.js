@@ -3,8 +3,11 @@ import axios from "axios";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
 import moment from "moment";
+import "../style/Items.css";
 
 function Items({ getItem, currentItems }) {
+  const currentDate = new Date();
+
   const onDelete = (id) => {
     if (window.confirm("Delete item?")) {
       let body = {
@@ -27,7 +30,7 @@ function Items({ getItem, currentItems }) {
   };
 
   return (
-    <div className="itemslist-wrapper">
+    <div className="items-wrapper">
       <Table striped bordered hover variant="dark">
         <thead>
           <tr>
@@ -39,8 +42,12 @@ function Items({ getItem, currentItems }) {
         </thead>
         <tbody>
           {currentItems.map((item, i) => {
+            const compareDates = Math.floor(
+              (new Date(item.expiryDate) - currentDate) / 86400000
+            );
+            const warning = compareDates < 21 && compareDates > -4;
             return (
-              <tr key={i}>
+              <tr key={i} className={warning ? "warning" : ""}>
                 <td>{item.barcode}</td>
                 <td>{item.name}</td>
                 <td>{moment(item.expiryDate).add(1, "days").format("ll")}</td>

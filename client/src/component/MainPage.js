@@ -24,8 +24,10 @@ function MainPage() {
           Log Out
         </Button>
       </div>
-      {item ? <UpdateItem item={item} /> : <AddItem />}
-      <ItemsList getItem={getItem} />
+      <div className="grid">
+        {item ? <UpdateItem item={item} /> : <AddItem />}
+        <ItemsList getItem={getItem} />
+      </div>
     </div>
   );
 }

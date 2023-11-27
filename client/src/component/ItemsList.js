@@ -43,8 +43,8 @@ function ItemsList({ getItem }) {
   };
 
   return (
-    <div>
-      <Warning itemsList={itemsList} />
+    <div className="itemslist-wrapper">
+      {/* <Warning itemsList={itemsList} /> */}
       <div className="search">
         <Form.Label>Search</Form.Label>
         <Form.Control
@@ -53,7 +53,11 @@ function ItemsList({ getItem }) {
           onChange={(e) => setSearch(e.currentTarget.value)}
         />
       </div>
-      <Items getItem={getItem} currentItems={currentItems} />
+      <Items
+        getItem={getItem}
+        currentItems={currentItems}
+        filteredItems={filteredItems}
+      />
       <div className="pagination">
         <Pagination
           itemsPerPage={itemsPerPage}

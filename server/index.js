@@ -55,6 +55,7 @@ app.post("/api/addItem", (req, res) => {
 
 app.post("/api/itemslist", (req, res) => {
   Item.find()
+    .sort({ expiryDate: 1 })
     .exec()
     .then((doc) => {
       res.status(200).json({ success: true, itemsList: doc });

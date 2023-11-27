@@ -1,0 +1,20 @@
+.items-wrapper {
+  margin: 50px;
+}
+
+.delete-btn {
+  margin-right: 10px;
+}
+
+.update-btn {
+  margin-left: 10px;
+}
+
+.warning {
+  --bs-table-bg: #bbd0ff;
+  --bs-table-striped-bg: #b8c0ff;
+  --bs-table-color: black;
+  --bs-table-striped-color: black;
+  --bs-table-hover-bg: none;
+  --bs-table-hover-bg: #c8b6ff;
+}

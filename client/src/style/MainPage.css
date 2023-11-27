@@ -3,3 +3,8 @@
   justify-content: flex-end;
   margin: 20px;
 }
+
+.grid {
+  display: grid;
+  grid-template-columns: 1fr 1fr;
+}
