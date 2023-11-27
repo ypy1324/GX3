@@ -1,7 +1,7 @@
 import React, { useState, useEffect } from "react";
 import axios from "axios";
 import "../style/ItemsList.css";
-import Warning from "./Warning";
+import Spinner from "react-bootstrap/Spinner";
 import Form from "react-bootstrap/Form";
 import Pagination from "./Pagination";
 import Items from "./Items";
@@ -11,6 +11,7 @@ function ItemsList({ getItem }) {
   const [search, setSearch] = useState("");
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
+  const [isLoading, setIsLoading] = useState(true);
   const filteredItems = itemsList.filter((item) => {
     if (/\d/.test(search)) {
       return (item.barcode + "").includes(search);
@@ -31,10 +32,12 @@ function ItemsList({ getItem }) {
         } else {
           alert("Failed to load items. Please try again");
         }
+        setIsLoading(false);
       })
       .catch((err) => {
         console.log(err);
         alert("Failed to load items. Please try again");
+        setIsLoading(false);
       });
   }, []);
 
@@ -44,27 +47,32 @@ function ItemsList({ getItem }) {
 
   return (
     <div className="itemslist-wrapper">
-      {/* <Warning itemsList={itemsList} /> */}
-      <div className="search">
-        <Form.Label>Search</Form.Label>
-        <Form.Control
-          type="text"
-          className="search-input"
-          onChange={(e) => setSearch(e.currentTarget.value)}
-        />
-      </div>
-      <Items
-        getItem={getItem}
-        currentItems={currentItems}
-        filteredItems={filteredItems}
-      />
-      <div className="pagination">
-        <Pagination
-          itemsPerPage={itemsPerPage}
-          totalItems={filteredItems.length}
-          paginate={paginate}
-        />
-      </div>
+      {isLoading ? (
+        <Spinner animation="border" />
+      ) : (
+        <div>
+          <div className="search">
+            <Form.Label>Search</Form.Label>
+            <Form.Control
+              type="text"
+              className="search-input"
+              onChange={(e) => setSearch(e.currentTarget.value)}
+            />
+          </div>
+          <Items
+            getItem={getItem}
+            currentItems={currentItems}
+            filteredItems={filteredItems}
+          />
+          <div className="pagination">
+            <Pagination
+              itemsPerPage={itemsPerPage}
+              totalItems={filteredItems.length}
+              paginate={paginate}
+            />
+          </div>
+        </div>
+      )}
     </div>
   );
 }

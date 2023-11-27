@@ -3,6 +3,7 @@ import axios from "axios";
 import "../style/AddItem.css";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import Spinner from "react-bootstrap/Spinner";
 import CustomAlert from "./CustomAlert";
 
 function AddItem() {
@@ -12,8 +13,10 @@ function AddItem() {
     expiryDate: "",
   });
   const [showAlert, setShowAlert] = useState(false);
+  const [isLoading, setIsLoading] = useState(false);
 
-  const onAdd = (e) => {
+  const onAdd = () => {
+    setIsLoading(true);
     let body = {
       barcode: formValue.barcode,
       name: formValue.name,
@@ -29,10 +32,12 @@ function AddItem() {
         } else {
           alert("Failed to add item. Please try again");
         }
+        setIsLoading(false);
       })
       .catch((err) => {
         console.log(err);
         alert("Failed to add item. Please try again");
+        setIsLoading(false);
       });
   };
 
@@ -90,7 +95,17 @@ function AddItem() {
             onAdd(e);
           }}
         >
-          Add
+          {isLoading ? (
+            <Spinner
+              as="span"
+              animation="border"
+              size="sm"
+              role="status"
+              aria-hidden="true"
+            />
+          ) : (
+            <div>Add</div>
+          )}
         </Button>
         {showAlert ? <CustomAlert setShowAlert={setShowAlert} /> : null}
       </div>

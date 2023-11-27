@@ -3,6 +3,7 @@ import axios from "axios";
 import "../style/UpdateItem.css";
 import Button from "react-bootstrap/Button";
 import Form from "react-bootstrap/Form";
+import Spinner from "react-bootstrap/Spinner";
 import moment from "moment";
 
 function UpdateItem({ item }) {
@@ -11,8 +12,10 @@ function UpdateItem({ item }) {
     name: item.name,
     expiryDate: moment(item.expiryDate).add(1, "days").format("YYYY-MM-DD"),
   });
+  const [isLoading, setIsLoading] = useState(false);
 
   const onUpdate = () => {
+    setIsLoading(true);
     let body = {
       id: item._id,
       barcode: formValue.barcode,
@@ -27,10 +30,12 @@ function UpdateItem({ item }) {
         } else {
           alert("Failed to update item. Please try again");
         }
+        setIsLoading(false);
       })
       .catch((err) => {
         console.log(err);
         alert("Failed to update item. Please try again");
+        setIsLoading(false);
       });
   };
 
@@ -86,7 +91,17 @@ function UpdateItem({ item }) {
             className="update-btn"
             disabled={handleDisable()}
           >
-            Update
+            {isLoading ? (
+              <Spinner
+                as="span"
+                animation="border"
+                size="sm"
+                role="status"
+                aria-hidden="true"
+              />
+            ) : (
+              <div>Update</div>
+            )}
           </Button>
         </form>
       </div>
