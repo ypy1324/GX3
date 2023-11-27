@@ -22,7 +22,7 @@ function Alert(props) {
             const compareDates = Math.floor(
               (new Date(item.expiryDate) - currentDate) / 86400000
             );
-            return compareDates < 6 && compareDates > -5 ? (
+            return compareDates < 21 && compareDates > -4 ? (
               <tr key={i}>
                 <td>{item.barcode}</td>
                 <td>{item.name}</td>
