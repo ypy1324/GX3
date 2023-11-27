@@ -8,6 +8,7 @@ function Alert(props) {
 
   return (
     <div className="alert-wrapper">
+      <h1>!!!</h1>
       <Table striped bordered hover variant="dark">
         <thead>
           <tr>

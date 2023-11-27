@@ -20,3 +20,8 @@
 .update-btn {
   margin-left: 10px;
 }
+
+.pagination {
+  justify-content: center;
+  margin-bottom: 20px;
+}

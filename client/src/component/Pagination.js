@@ -1,33 +1,26 @@
-import Pagination from "react-bootstrap/Pagination";
+import React from "react";
+import "../style/Pagination.css";
 
-function Pagination({ total, current, onChangePage }) {
-  let items = [];
-  if (current > 1) {
-    items.push(
-      <Pagination.Prev key="prev" onClick={() => onChangePage(page - 1)} />
-    );
+function Pagination({ itemsPerPage, totalItems, paginate }) {
+  const pageNumbers = [];
+
+  for (let i = 1; i <= Math.ceil(totalItems / itemsPerPage); i++) {
+    pageNumbers.push(i);
   }
 
-  for (let page = 1; page <= total; page++) {
-    items.push(
-      <Pagination.Item
-        key={page}
-        data-page={page}
-        active={page === current}
-        onClick={() => onChangePage(page)}
-      >
-        {page}
-      </Pagination.Item>
-    );
-  }
-
-  if (current < total) {
-    items.push(
-      <Pagination.Next key="next" onClick={() => onChangePage(page + 1)} />
-    );
-  }
-
-  return <div></div>;
+  return (
+    <nav>
+      <ul className="pagination">
+        {pageNumbers.map((number) => (
+          <li key={number} className="page-item">
+            <button onClick={() => paginate(number)} className="page-link">
+              {number}
+            </button>
+          </li>
+        ))}
+      </ul>
+    </nav>
+  );
 }
 
 export default Pagination;

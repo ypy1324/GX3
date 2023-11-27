@@ -6,13 +6,19 @@ import Alert from "./Alert";
 import Form from "react-bootstrap/Form";
 import Table from "react-bootstrap/Table";
 import Button from "react-bootstrap/Button";
+import Pagination from "./Pagination";
 
 function ItemsList({ getItem }) {
   const [itemsList, setItemsList] = useState([]);
   const [search, setSearch] = useState("");
+  const [currentPage, setCurrentPage] = useState(1);
+  const [itemsPerPage] = useState(10);
   const filteredItems = itemsList.filter((item) => {
     return item.name.toLowerCase().includes(search.toLowerCase());
   });
+  const indexOfLastItem = currentPage * itemsPerPage;
+  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
+  const currentItems = filteredItems.slice(indexOfFirstItem, indexOfLastItem);
 
   useEffect(() => {
     axios
@@ -50,6 +56,10 @@ function ItemsList({ getItem }) {
     }
   };
 
+  const paginate = (pageNumber) => {
+    setCurrentPage(pageNumber);
+  };
+
   return (
     <div>
       <Alert itemsList={itemsList} />
@@ -72,7 +82,7 @@ function ItemsList({ getItem }) {
             </tr>
           </thead>
           <tbody>
-            {filteredItems.map((item, i) => {
+            {currentItems.map((item, i) => {
               return (
                 <tr key={i}>
                   <td>{item.barcode}</td>
@@ -101,6 +111,13 @@ function ItemsList({ getItem }) {
             })}
           </tbody>
         </Table>
+      </div>
+      <div className="pagination">
+        <Pagination
+          itemsPerPage={itemsPerPage}
+          totalItems={filteredItems.length}
+          paginate={paginate}
+        />
       </div>
     </div>
   );
