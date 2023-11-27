@@ -14,7 +14,11 @@ function ItemsList({ getItem }) {
   const [currentPage, setCurrentPage] = useState(1);
   const [itemsPerPage] = useState(10);
   const filteredItems = itemsList.filter((item) => {
-    return item.name.toLowerCase().includes(search.toLowerCase());
+    if (/\d/.test(search)) {
+      return (item.barcode + "").includes(search);
+    } else {
+      return item.name.toLowerCase().includes(search.toLowerCase());
+    }
   });
   const indexOfLastItem = currentPage * itemsPerPage;
   const indexOfFirstItem = indexOfLastItem - itemsPerPage;
