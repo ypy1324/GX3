@@ -8,7 +8,7 @@ import CustomAlert from "./CustomAlert";
 
 function AddItem() {
   const [formValue, setFormValue] = useState({
-    barcode: 0,
+    barcode: "",
     name: "",
     expiryDate: "",
   });
@@ -43,7 +43,7 @@ function AddItem() {
 
   const handleDisable = () => {
     if (
-      formValue.barcode !== 0 &&
+      formValue.barcode !== "" &&
       formValue.name !== "" &&
       formValue.expiryDate !== ""
     ) {
@@ -60,7 +60,7 @@ function AddItem() {
         <Form.Control
           className="add-input"
           value={formValue.barcode}
-          type="number"
+          type="text"
           onChange={(e) =>
             setFormValue({ ...formValue, barcode: e.currentTarget.value })
           }

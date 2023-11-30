@@ -41,7 +41,7 @@ function UpdateItem({ item }) {
 
   const handleDisable = () => {
     if (
-      formValue.barcode !== 0 &&
+      formValue.barcode !== "" &&
       formValue.name !== "" &&
       formValue.expiryDate !== ""
     ) {
@@ -59,7 +59,7 @@ function UpdateItem({ item }) {
           <Form.Control
             className="update-input"
             value={formValue.barcode}
-            type="number"
+            type="text"
             onChange={(e) =>
               setFormValue({ ...formValue, barcode: e.currentTarget.value })
             }

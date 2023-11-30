@@ -2,7 +2,7 @@ const mongoose = require("mongoose");
 
 const itemSchema = new mongoose.Schema(
   {
-    barcode: Number,
+    barcode: String,
     name: String,
     expiryDate: Date,
   },
