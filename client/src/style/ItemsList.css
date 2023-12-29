@@ -15,5 +15,23 @@
 
 .pagination {
   justify-content: center;
-  margin-bottom: 20px;
+  font-size: 1.2rem;
+  gap: 5px;
+}
+
+.page-num {
+  text-decoration: none;
+  color: white;
+  padding: 8px 15px;
+  border-radius: 5px;
+}
+
+.page-num:hover {
+  background-color: #232323;
+  color: white;
+}
+
+.active {
+  background-color: #232323;
+  color: white;
 }

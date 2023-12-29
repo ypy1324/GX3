@@ -3,14 +3,12 @@ import axios from "axios";
 import "../style/ItemsList.css";
 import Spinner from "react-bootstrap/Spinner";
 import Form from "react-bootstrap/Form";
-import Pagination from "./Pagination";
 import Items from "./Items";
+import ReactPaginate from "react-paginate";
 
 function ItemsList({ getItem }) {
   const [itemsList, setItemsList] = useState([]);
   const [search, setSearch] = useState("");
-  const [currentPage, setCurrentPage] = useState(1);
-  const [itemsPerPage] = useState(10);
   const [isLoading, setIsLoading] = useState(true);
   const filteredItems = itemsList.filter((item) => {
     if (/\d/.test(search)) {
@@ -19,9 +17,10 @@ function ItemsList({ getItem }) {
       return item.name.toLowerCase().includes(search.toLowerCase());
     }
   });
-  const indexOfLastItem = currentPage * itemsPerPage;
-  const indexOfFirstItem = indexOfLastItem - itemsPerPage;
-  const currentItems = filteredItems.slice(indexOfFirstItem, indexOfLastItem);
+  const [currentItems, setCurrentItems] = useState([]);
+  const [pageCount, setPageCount] = useState(0);
+  const [itemOffset, setItemOffset] = useState(0);
+  const itemsPerPage = 10;
 
   useEffect(() => {
     axios
@@ -41,8 +40,15 @@ function ItemsList({ getItem }) {
       });
   }, []);
 
-  const paginate = (pageNumber) => {
-    setCurrentPage(pageNumber);
+  useEffect(() => {
+    const endOffset = itemOffset + itemsPerPage;
+    setCurrentItems(filteredItems.slice(itemOffset, endOffset));
+    setPageCount(Math.ceil(filteredItems.length / itemsPerPage));
+  }, [itemOffset, itemsPerPage, filteredItems]);
+
+  const handlePageClick = (event) => {
+    const newOffset = (event.selected * itemsPerPage) % filteredItems.length;
+    setItemOffset(newOffset);
   };
 
   return (
@@ -59,16 +65,21 @@ function ItemsList({ getItem }) {
               onChange={(e) => setSearch(e.currentTarget.value)}
             />
           </div>
-          <Items
-            getItem={getItem}
-            currentItems={currentItems}
-            filteredItems={filteredItems}
-          />
-          <div className="pagination">
-            <Pagination
-              itemsPerPage={itemsPerPage}
-              totalItems={filteredItems.length}
-              paginate={paginate}
+          <Items getItem={getItem} currentItems={currentItems} />
+          <div>
+            <ReactPaginate
+              breakLabel="..."
+              nextLabel=">"
+              onPageChange={handlePageClick}
+              pageRangeDisplayed={3}
+              pageCount={pageCount}
+              previousLabel="<"
+              renderOnZeroPageCount={null}
+              containerClassName="pagination"
+              pageLinkClassName="page-num"
+              previousLinkClassName="page-num"
+              nextLinkClassName="page-num"
+              activeLinkClassName="active"
             />
           </div>
         </div>
