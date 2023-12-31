@@ -85,7 +85,9 @@ function AddItem() {
             barcodeChecker(e.currentTarget.value);
           }}
         />
-        {barcodeExist ? <div>barcode exists</div> : null}
+        <div className="barcode-exists">
+          {barcodeExist ? <div>*Barcode exists*</div> : null}
+        </div>
         <br />
         <Form.Label>Item Name</Form.Label>
         <Form.Control
