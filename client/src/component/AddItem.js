@@ -14,6 +14,7 @@ function AddItem() {
   });
   const [showAlert, setShowAlert] = useState(false);
   const [isLoading, setIsLoading] = useState(false);
+  const [barcodeExist, setBarcodeExist] = useState(false);
 
   const onAdd = () => {
     setIsLoading(true);
@@ -53,6 +54,24 @@ function AddItem() {
     }
   };
 
+  const barcodeChecker = (barcode) => {
+    let body = {
+      barcode: barcode,
+    };
+    axios
+      .post("/api/barcodeDuplicate", body)
+      .then((res) => {
+        if (res.data.match) {
+          setBarcodeExist(true);
+        } else {
+          setBarcodeExist(false);
+        }
+      })
+      .catch((err) => {
+        console.log(err);
+      });
+  };
+
   return (
     <div className="add-wrapper">
       <div className="add-border">
@@ -61,10 +80,12 @@ function AddItem() {
           className="add-input"
           value={formValue.barcode}
           type="text"
-          onChange={(e) =>
-            setFormValue({ ...formValue, barcode: e.currentTarget.value })
-          }
+          onChange={(e) => {
+            setFormValue({ ...formValue, barcode: e.currentTarget.value });
+            barcodeChecker(e.currentTarget.value);
+          }}
         />
+        {barcodeExist ? <div>barcode exists</div> : null}
         <br />
         <Form.Label>Item Name</Form.Label>
         <Form.Control

@@ -91,3 +91,18 @@ app.post("/api/updateItem", (req, res) => {
       res.status(400).json({ success: false });
     });
 });
+
+app.post("/api/barcodeDuplicate", (req, res) => {
+  Item.findOne({ barcode: req.body.barcode })
+    .exec()
+    .then((item) => {
+      if (item) {
+        res.status(200).json({ match: true });
+      } else {
+        res.status(200).json({ match: false });
+      }
+    })
+    .catch((err) => {
+      res.status(400).json({ success: false });
+    });
+});
